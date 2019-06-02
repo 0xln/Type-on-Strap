@@ -1,8 +1,8 @@
 # SITE CONFIGURATION
 baseurl: "Blog"
 url: "https://0xln.github.io"
-title: Type on Strap # site's title
-description: "A website with blog posts and pages" # used by search engines
+title: Infosec and Password Cracking Blog 
+description: "Password cracking, infosec articles and assorted hackery" # used by search engines
 
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
