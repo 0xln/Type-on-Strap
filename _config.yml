@@ -1,5 +1,5 @@
 # SITE CONFIGURATION
-baseurl: "/Blog"
+baseurl: ""
 url: "https://0xln.github.io"
 title: Infosec and Password Cracking Blog 
 description: "Password cracking, infosec articles and assorted hackery" # used by search engines
