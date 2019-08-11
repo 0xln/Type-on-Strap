@@ -7,7 +7,7 @@ description: "Password cracking, infosec articles and assorted hackery" # used b
 # THEME-SPECIFIC CONFIGURATION
 theme_settings:
   # Meta
-  avatar: /assets/img/pexels/lizwiz.webp
+  avatar: /assets/img/triangle.jpg
   color_image: /assets/img/lineart.png # In post when you set color
   favicon: /assets/favicon.ico
 
