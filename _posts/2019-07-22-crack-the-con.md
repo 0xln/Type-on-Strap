@@ -46,6 +46,7 @@ salt:
 4754464F214E6F7468696E6748657265
 0s    (00:00:00)
 ```
+
 Some command line Kung Fu later to format the hashes 
 
 ```
