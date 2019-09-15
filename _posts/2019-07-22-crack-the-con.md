@@ -37,6 +37,7 @@ Hash:.domain:SALT:Iterations
 
 The next question was, where do i find those 🧐. More googling later, and it turns out the NSEC3PARAM record has all the goodies I need. 
 
+```
 crackthecon.0x23.pw IN NSEC3PARAM    
 hash algorithm:SHA-1 (1)
 flags:None (0)
@@ -44,10 +45,9 @@ iterations:19
 salt:(128 bits)    
 4754464F214E6F7468696E6748657265
 0s
-
+```
 
 Some command line Kung Fu later to format the hashes 
-
 
 ```
 awk {print $0”:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19”} hashes-extracted.txt 
@@ -97,8 +97,6 @@ During raking, I noticed that experimenting  with the minimum and maximum genera
 --generate-rules-func-max=NUM
 ```
 Cranking the minimum rule function to four resulted in more hits. Some of the rules found can be seen below. 
-
-
 
 ```T5 *A7
 y2 s}S o4Y
