@@ -1,3 +1,11 @@
+---
+layout: post
+title: Crack The Con 2019 Writeup
+tags: [Password Cracking, Cynosure Prime, Crack The Con, Hashcat]
+---
+
+
+
 I spent some time milling around the crack me if you can stand at Defcon last year, but never got round to asking “hey, how do I get involved”. 
 
 Fast forward to this year, and a number of the Hashes.org community talked about putting a team together for Crack The Con. I thought, yeah that would be a laugh, so it jumped on in. 
@@ -55,7 +63,8 @@ awk {print $0”:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19”} ha
 
 ##### Example Correctly Formatted Hashes
 
-```00gbb3vv0ofs2p513u104iisss0nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+```
+00gbb3vv0ofs2p513u104iisss0nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
 00hfaricfrm4mlcc1mnss6i4jtgnsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
 00nr4pu24aq9ab5t9u934ik72h0isfun:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
 00oco3n80stmell97ncc8u3av80nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
@@ -90,15 +99,18 @@ An example command might look something like this.
 ```
 hashcat -m 1700 -a 0 hashes.txt founds.txt -g 100000 --debug-mode=1 --debug-file=matched.rule --loopback
 ```
+
 During raking, I noticed that experimenting  with the minimum and maximum generated rule functions flags was producing more results. 
 
 ```
 --generate-rules-func-min=NUM 
 --generate-rules-func-max=NUM
 ```
+
 Cranking the minimum rule function to four resulted in more hits. Some of the rules found can be seen below. 
 
-```T5 *A7
+```
+T5 *A7
 y2 s}S o4Y
 TB O82
 T4 'B *1A
@@ -106,7 +118,7 @@ O42 *92 O59
 i8t s3| T4
 K k OA4
 T6 s&N o8e
-$B s|’  ^<
+$B s|\’  ^<
 ```
 
 ##### Example output from matched rules
