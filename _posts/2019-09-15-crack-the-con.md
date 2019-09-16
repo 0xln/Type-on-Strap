@@ -40,7 +40,7 @@ Out came a bunch of hashes:
 00gbb3vv0ofs2p513u104iisss0nsec3
 00nr4pu24aq9ab5t9u934ik72h0isfun
 ```
-#####Formating And Cracking The Hashes
+#### Formating And Cracking The Hashes
 
 Checking back on the Hashcat example, I realised I was missing a big chunk of information. The salt, the iterations and the domain, in the following format: 
 
@@ -65,7 +65,7 @@ Some command line Kung Fu later to format the hashes:
 awk {print $0”:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19”} hashes-extracted.txt 
 ```
 
-#####  Example of Correctly Formatted Hashes
+####  Example of Correctly Formatted Hashes
 
 ```
 00gbb3vv0ofs2p513u104iisss0nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
@@ -82,7 +82,7 @@ Once I finally got the hashes formatted correctly, it was a matter of running th
 
 [SecLists top 5000 subdomains](https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt)
 
-##### Example Command 
+#### Example Command 
 
 ```
 hashcat -m 8300 -a 0 nsec3hashes.txt subdomains-top1million-5000.txt 
@@ -125,7 +125,7 @@ T6 s&N o8e
 $B s|\’  ^<
 ```
 
-##### Example Output from Matched Rules
+#### Example Output from Matched Rules
 
 
 ```
@@ -161,7 +161,7 @@ As the minimum number of functions was increased to four, the likelihood of hitt
 
 Using this method, and stacking the matched.rule, we managed to grind additional hashes and patterns we were unlikely to ever find through traditional rules alone. Here are some example founds:
 
-##### Example Founds 
+#### Example Founds 
 ```
 woaitaitongtong062
 Rhtottotybt juy`v
