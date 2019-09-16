@@ -1,10 +1,10 @@
 ---
 layout: page
 title: "MDXFind Bible" 
-subtitle: "Work In Progress"   
-feature-img: "assets/img/sample.png" 
+subtitle: "(Work In Progress)"   
+feature-img: "assets/img/pexels/desk-messy" 
 permalink: /mdxfindbible               # Set a permalink your your page
-hide: false                           # Prevent the page title to appear in the navbar
+hide: true                           # Prevent the page title to appear in the navbar
 icon: "fa-book"                    # Will Display only the fontawesome icon (here: fa-search) and not the title
 tags: [hashes.org, mdxfind]
 ---
