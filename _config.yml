@@ -56,7 +56,7 @@ theme_settings:
     email:
 
   # Scripts / Features 
-  google_analytics: # Tracking ID, e.g. "UA-000000-01"
+  google_analytics: UA-148799411-1
   disqus_shortname:
   katex: true # Enable if using math markup
 
