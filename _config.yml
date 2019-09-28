@@ -14,8 +14,7 @@ theme_settings:
   # Header and footer text
   header_text: 0xln
   header_feature_image: /assets/img/background.jpg
-  footer_text: >
-    Powered by Coffee with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
+  footer_text: Powered by Coffee with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
 
   # Icons
   rss: true  # Make sure you created a feed.xml with feed.xml layout
