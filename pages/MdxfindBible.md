@@ -20,7 +20,7 @@ This is a work in progress page of tips and tricks related to MDXfind. Mostly co
 MDXfind's strength is it's ability to run wordlists against lists of mixed hashes or list of unknown hashes. Looks like an MD5, but are you sure that 32hex definately is? Let Mdfind do the hard work for you. When running mixed lists or known algo's, it's always worth running it with mdsplit.
 
 ```
-cat mixedhashes.list | ./mdxfind -h 'ALL' -h !salt,!user,!mdx5**(CHECKTHIS)** wordlist.txt | ./mdsplit-32 mixedhashes.list 
+cat mixedhashes.list | ./mdxfind -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit-32 mixedhashes.list 
 ```
 
 ### Running MDXFind From a File 
