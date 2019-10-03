@@ -10,10 +10,7 @@ Since I've been working on the MDXfind bible the last couple of days, I'm puttin
 
 The aim of the game here is to demonstrate how useful running MDXFind is for identifying hashtypes and running mixed hash types at the same time. 
 
-
-Task 1.
-
-**Solution:**
+**Task 1 Solution:**
 
 ```
 cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!salt,!user,!mdx5' rockyou.txt | ./mdsplit.osx mixedhashes.list 
@@ -78,7 +75,6 @@ Which returns ``61``. The next thing for us to do is find any example hashes tha
 
 The [Hashcat Example Hashes Page](https://hashcat.net/wiki/doku.php?id=example_hashes) has plenty of references to known hash structures and types, and a quick find in the page for ``$2`` gives us the following. 
 
-___
 
 | Hash-Mode|Hash-Name|Example|
 | -------- | -------- | -------- |
@@ -91,7 +87,7 @@ Judging by the length and construction it looks like a suitable fit candidate, s
 cat mixedhashes.list | ./mdxfind.osx -h '^bcrypt$' -h rockyou.txt | ./mdsplit.osx mixedhashes.list 
 ```
 
-
+![tooooolong]({{ site.url }}/assets/img/Oneeternitylater.jpg)
 
 
 
