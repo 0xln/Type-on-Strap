@@ -70,8 +70,7 @@ One of the quickest way to identify a hash, is by its length and composition. As
 echo '$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom' | wc -c
 ```
 
-Which returns ``61``. The next thing for us to do is find any example hashes that are that length, and prefixed with ``$2``. 
-
+Which returns ``61``. The next thing for us to do is find any example hashes that are roughly that length, and prefixed with ``$2``. 
 
 The [Hashcat Example Hashes Page](https://hashcat.net/wiki/doku.php?id=example_hashes) has plenty of references to known hash structures and types, and a quick find in the page for ``$2`` gives us the following. 
 
@@ -81,7 +80,7 @@ The [Hashcat Example Hashes Page](https://hashcat.net/wiki/doku.php?id=example_h
 | 3200|bcrypt $2*$, Blowfish (Unix)|$2a$05$LhayLxezLhK1LhWvKxCyLOj0j1u.Kj0jZ0pEmm134uzrQlFvQJLF6 |
 
 
-Judging by the length and construction it looks like a suitable fit candidate, so we will instruct MDXfind to use the bcrypt algo only. This can be achieved by place ``^`` and``$`` around the algo. 
+Judging by the length and construction it looks like a suitable candidate, so we will instruct MDXfind to use the bcrypt algo only. This can be achieved by placing ``^`` and``$`` around the algo. 
 
 ```
 cat mixedhashes.list | ./mdxfind.osx -h '^bcrypt$' -h rockyou.txt | ./mdsplit.osx mixedhashes.list 
