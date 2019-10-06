@@ -88,5 +88,22 @@ cat mixedhashes.list | ./mdxfind.osx -h '^bcrypt$' -h rockyou.txt | ./mdsplit.os
 
 ![tooooolong]({{ site.url }}/assets/img/Oneeternitylater.jpg)
 
+```
+Done - 4 threads caught
+14,344,391 lines processed in 124187 seconds
+115.51 lines per second
+124186.42 seconds hashing, 173,927 total hash calculations
+0.00M hashes per second (approx)
+1 total files
+1 BCRYPTx01 hashes found
+1 Total hashes found
+1 result lines processed, 1 type found
+BCRYPT 
+mixedhashes.list had 1 hits
+```
+```
+cat mixedhashes.BCRYPT 
+$2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom:bleh
+```
 
-
+Now to deal with the last hash which looks like an MD5. Since we known we have to use rockyou to crack it, lets try MD5 as the algortithmn, and add some rules.
