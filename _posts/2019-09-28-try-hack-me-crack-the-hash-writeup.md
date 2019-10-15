@@ -105,5 +105,51 @@ mixedhashes.list had 1 hits
 cat mixedhashes.BCRYPT 
 $2y$12$Dwt1BZj6pcyc3Dy1FWZ5ieeUznr71EeNkJkUlypTsgbX1H68wsRom:bleh
 ```
+That leaves one hash left to solve...
 
-Now to deal with the last hash which looks like an MD5. Since we known we have to use rockyou to crack it, lets try MD5 as the algortithmn, and add some rules.
+```
+279412f945939ba78ce0758d3fd83daa
+```
+
+---
+
+Since we known we have to use rockyou to crack the hashes, lets try running all algo's again, but this time adding some rules by adding the ``-r`` flag. 
+
+```
+cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!user,!salt,!mdx5' -r best64.rule rockyou.txt | ./mdsplit.osx mixedhashes.list
+```
+
+And after a short while, we've got a hit. 
+
+```
+Working on rockyou.txt, w=124, line 190945, Found=1
+Working on rockyou.txt, w=124, line 190945, Found=1
+Working on rockyou.txt, w=124, line 190945, Found=1
+Working on rockyou.txt, w=124, line 190945, Found=1
+```
+
+I really don't feel like waiting for the other 14153446 lines (not including rules) for this job to complete, so the easiest way to see the output that has been fed into mdsplit, is to kill the MDXfind process. 
+
+```
+ps -ax | grep mdxfind
+```
+```
+31163 ttys003  4753:28.31 ./mdxfind.osx -h ALL -h !user !salt !mdx5 -r.....
+```
+So lets kill the process so ``mdsplit`` can do its thing.
+
+```
+sudo kill -9 31163
+```
+As the process terminates, all found hashes are dumped into mdsplit to be processed. 
+
+```
+1 result lines processed, 1 type found
+MD4x01 
+```
+```
+cat mixedhashes.MD4x01 
+279412f945939ba78ce0758d3fd83daa:Eternity22
+```
+
+And bingo, the final hashes are cracked and Level 1 is complete.
