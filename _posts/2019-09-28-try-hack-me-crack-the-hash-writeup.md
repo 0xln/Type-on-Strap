@@ -152,4 +152,4 @@ cat mixedhashes.MD4x01
 279412f945939ba78ce0758d3fd83daa:Eternity22
 ```
 
-And bingo, the final hashes are cracked and Level 1 is complete.
+And bingo, the final hash is cracked and Level 1 is complete.
