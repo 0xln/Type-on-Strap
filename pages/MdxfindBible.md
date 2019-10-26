@@ -31,15 +31,12 @@ Alternatively, if you want to run it from a file instead of STDIN
 mdxfind -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt >results.file
 ```
 
-### Generating Candidates (CHECKDIS)
+### Generating Candidates (WIP)
 
 Somtimes you might get a partial match, or you want to check the plaintext value against it's hashed counter part. 
 
 ```
 echo -n '0xln.pw' | mdxfind -h ALL -h '!salt,!user' -z -f /dev/null -i 5 stdin 2>&1
-```
-
-```
 ```
 
 
