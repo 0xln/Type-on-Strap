@@ -4,13 +4,13 @@ title: TryHackMe - Crack The Hash Walkthrough
 tags: [Password Cracking, MDXfind, Crack The Hash]
 ---
 
-Since I've been working on the MDXfind bible the last couple of days, I'm putting all that good work to use and writing up the solutions to the "Crack The Hash" room on tryhackme.com. 
+Since I've been working on the MDXfind bible the last couple of weeks, I'm putting all that good work to use and writing up the solutions to the "Crack The Hash" room on tryhackme.com. 
 
 # Level 1
 
-The aim of the game here is to demonstrate how useful running MDXFind is for identifying hashtypes and running mixed hash types at the same time. 
+The aim of the game here is to demonstrate how useful running MDXFind is for identifying unknown hashtypes and cracking list of mixed password hashes. First, lets create a file containing all the Level 1 hashes. 
 
-**Task 1 Solution:**
+**Solution:**
 
 ```
 cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!salt,!user,!mdx5' rockyou.txt | ./mdsplit.osx mixedhashes.list 
@@ -113,7 +113,7 @@ That leaves one hash left to solve...
 
 ---
 
-Since we known we have to use rockyou to crack the hashes, lets try running all algo's again, but this time adding some rules by adding the ``-r`` flag. 
+Since we known we have to use rockyou to crack the hashes, and we have already run all known MDXfind algorithms already, lets try this again, this time adding some rules. This is enabled by using the ``-r`` flag. 
 
 ```
 cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!user,!salt,!mdx5' -r best64.rule rockyou.txt | ./mdsplit.osx mixedhashes.list
@@ -136,7 +136,7 @@ ps -ax | grep mdxfind
 ```
 31163 ttys003  4753:28.31 ./mdxfind.osx -h ALL -h !user !salt !mdx5 -r.....
 ```
-So lets kill the process so ``mdsplit`` can do its thing.
+So lets kill the MDXfind process so ``mdsplit`` can do its thing.
 
 ```
 sudo kill -9 31163
