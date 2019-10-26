@@ -18,10 +18,10 @@ cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!salt,!user,!mdx5' rockyou.txt
 
 ```
 Done - 4 threads caught
-14,344,391 lines processed in 69125 seconds
-207.51 lines per second
-69124.61 seconds hashing, 6,968,842,180 total hash calculations
-0.10M hashes per second (approx)
+14,344,391 lines processed in 11807 seconds
+1214.91 lines per second
+11807.49 seconds hashing, 6,968,842,180 total hash calculations
+0.59M hashes per second (approx)
 1 total files
 1 MD5x01 hashes found
 1 SHA1x01 hashes found
