@@ -86,7 +86,7 @@ Judging by the length and construction it looks like a suitable candidate, so we
 cat mixedhashes.list | ./mdxfind.osx -h '^bcrypt$' -h rockyou.txt | ./mdsplit.osx mixedhashes.list 
 ```
 
-![tooooolong]({{ site.url }}/assets/img/Oneeternitylater.jpg)
+![tooooolong](https://0xln.pw/assets/img/Oneeternitylater.jpg)
 
 ```
 Done - 4 threads caught
