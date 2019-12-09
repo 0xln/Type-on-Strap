@@ -17,33 +17,69 @@ This is a work in progress page of tips and tricks related to MDXfind. Mostly co
 
 ### Basic Usage Using STDIN
 
-MDXfind's strength is it's ability to run wordlists against lists of mixed hashes or list of unknown hashes. Looks like an MD5, but are you sure that 32hex definately is? Let Mdfind do the hard work for you. When running mixed lists or known algo's, it's always worth running it with mdsplit.
+MDXfind's strength is it's ability to run wordlists against lists of mixed hashes or lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let Mdfind do the hard work for you. When running mixed lists or known algo's, it's always worth running it with mdsplit to save the hassle of passing it out later
 
 ```
-cat mixedhashes.list | ./mdxfind -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit-32 mixedhashes.list 
+cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list 
 ```
+This command runs a mixed file of hashes through all known algorithms in MDXfind apart from those requiring salts, usernames and skipping iterations like `MD5(MD5(plain))`. 
 
 ### Running MDXFind From a File 
 
-Alternatively, if you want to run it from a file instead of STDIN
+Alternatively, if you want to run it from a file instead of STDIN.
 
 ```
-mdxfind -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt >results.file
+./mdxfind.static -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt >results.file
+```
+This means that if you get bored wait for results, working from a shared network drive or want to quickly kill the process, you've still got all those delicious founds.
+
+### Using MDXfind's built in hash modes
+
+Some modes from hashcat are already supported within MDXfind, which means if you identify a hash from the examples Hashcat page, you can get MDXfind to do the same. One such example is `Vbulletin` 
+
+```
+ cat vbulletin-hashes.txt | ./mdxfind -m 2611 -s salts.txt wordlist.txt | ./mdsplit.static vbulletin-hashes.txt
+```
+The following is a list of supported modes in hashcat. 
+
+* 2611
+* 2711
+* More to follow.....
+
+
+### Running salted hashes with MDXfind 
+
+In the cases where you've got salted hashes where the salt is not part of the hashes (for example Vbulletin). You will need to give MDXfind a salt file. This is provided using the  `-s` switch command. A quick oneliner to seperate the salts from the hashes. 
+
+```
+cat vbulletin-hashes.txt | cut -f 2 -d ":" | sort -u > salts.txt
 ```
 
-### Generating Candidates (WIP)
-
-Somtimes you might get a partial match, or you want to check the plaintext value against it's hashed counter part. 
-
 ```
-echo -n '0xln.pw' | mdxfind -h ALL -h '!salt,!user' -z -f /dev/null -i 5 stdin 2>&1
+ cat vbulletin-hashes.txt | ./mdxfind -m 2611 -s salts.txt wordlist.txt | ./mdsplit.static vbulletin-hashes.txt
 ```
 
+
+### Generating Hashed Example
+
+MDXfind has the option to generate examples of what a specific hash should look like and its plaintext pair. This can be helpful when trying to work out if a hash has been truncated, or if you are identifying which variation of a hash you might have found. 
+
+```
+echo -n 'Password' | mdxfind -h 'MYSQL' -h '!salt,!user' -z -f /dev/null -i 5 stdin 2>&1
+```
+
+```
+MYSQL3x01 2f18d4d923ccae07:Password
+MYSQL3x02 6c570ef02890ea40:Password
+MYSQL3x03 6aa0bd3f0e7cfb70:Password
+MYSQL3x04 2fe7115b6128d301:Password
+MYSQL3x05 577828bc229cf0ea:Password
+```
 
 
 #### MDXfind to Hashes.org Format
 
-Now that you've found a bunch of hashes using the tips and instructions above, you might want to upload them to Hashes.org so you can jump up the leader board 😉. The following reference table can be used to help figure out the algo needed to upload to Hashes.org.
+Now that you've found a bunch of hashes using the tips and instructions above, you might want to upload them to Hashes.org so you can jump up the leader board 😉. The following reference table can be used to help you figure out the algo you need to provide, against the ones described in MDXfind. As a
 
 |MDXfind Algo|Hashes.org Format|
 |------------|---------------|
@@ -62,6 +98,6 @@ Now that you've found a bunch of hashes using the tips and instructions above, y
 |MD5RAW|MD5RAW(MD5(PLAIN))|
 |MD5PASSSHA1MD5|MD5(PLAINSHA1MD5(PLAIN))
 
-### Where To Find
+### Where To Download MDXfind
 
 [Download MDXfind](https://hashes.org/mdxfind.php) 
