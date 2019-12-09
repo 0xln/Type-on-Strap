@@ -11,25 +11,26 @@ tags: [hashes.org, mdxfind,]
 
 
 
-## Intro (**WIP**)
+## Intro
 
-This is a work in progress page of tips and tricks related to MDXfind. Mostly collated from using MDXfind and uploading hashes, as well as hassling hops and s3in!c for how to use it....
+This is a work in progress page of tips and tricks that might be handy for those learning or using MDXfind. Most of the content was collated from using it, Royce William's blog post on MDXfind and hassling hops and s3in!c on the hashes.org discord server for how on earth to use it. 
+
 
 ### Basic Usage Using STDIN
 
-MDXfind's strength is it's ability to run wordlists against lists of mixed hashes or lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let Mdfind do the hard work for you. When running mixed lists or known algo's, it's always worth running it with mdsplit to save the hassle of passing it out later
+MDXfind's strength is it's ability to run wordlists against lists of mixed hashes / lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let MDXfind do the hard work for you. When running mixed lists or known algo's, it's always worth running it with mdsplit to save the hassle of parsing it out later.
 
 ```
 cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list 
 ```
-This command runs a mixed file of hashes through all known algorithms in MDXfind apart from those requiring salts, usernames and skipping iterations like `MD5(MD5(plain))`. 
+This command runs a mixed file of hashes through all known algorithms in MDXfind apart from those requiring salts, usernames and skipping internally iterated hashes like `SHA1(MD5(MD5($pass))`. 
 
 ### Running MDXFind From a File 
 
 Alternatively, if you want to run it from a file instead of STDIN.
 
 ```
-./mdxfind.static -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt >results.file
+./mdxfind.static -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt > results.file
 ```
 This means that if you get bored wait for results, working from a shared network drive or want to quickly kill the process, you've still got all those delicious founds.
 
