@@ -33,19 +33,6 @@ Alternatively, if you want to run it from a file instead of STDIN.
 ```
 This means that if you get bored wait for results, working from a shared network drive or want to quickly kill the process, you've still got all those delicious founds.
 
-### Using MDXfind's built in hash modes
-
-Some modes from hashcat are already supported within MDXfind, which means if you identify a hash from the examples Hashcat page, you can get MDXfind to do the same. One such example is `Vbulletin` 
-
-```
- cat vbulletin-hashes.txt | ./mdxfind -m 2611 -s salts.txt wordlist.txt | ./mdsplit.static vbulletin-hashes.txt
-```
-The following is a list of supported modes in hashcat. 
-
-* 2611
-* 2711
-* More to follow.....
-
 
 ### Running salted hashes with MDXfind 
 
@@ -60,7 +47,7 @@ cat vbulletin-hashes.txt | cut -f 2 -d ":" | sort -u > salts.txt
 ```
 
 
-### Generating Hashed Example
+### Generating Example Hashes
 
 MDXfind has the option to generate examples of what a specific hash should look like and its plaintext pair. This can be helpful when trying to work out if a hash has been truncated, or if you are identifying which variation of a hash you might have found. 
 
