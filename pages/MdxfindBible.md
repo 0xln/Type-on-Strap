@@ -18,7 +18,7 @@ This is a work in progress page of tips and tricks that might be handy for those
 
 ### Basic Usage Using STDIN
 
-MDXfind's strength is it's ability to run wordlists against lists of mixed hashes / lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let MDXfind do the hard work for you. When running mixed lists of unknown algo's, it's always worth running it with mdsplit to save the hassle of parsing it out later.
+MDXfind's strength is its ability to run wordlists against lists of mixed hashes / lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let MDXfind do the hard work for you. When running mixed lists of unknown algo's, it's always worth running it with mdsplit to save the hassle of parsing it out later.
 
 ```
 cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list 
@@ -37,7 +37,7 @@ This means that if you get bored waiting for results, are working from a shared 
 
 ### Running salted hashes with MDXfind 
 
-In the cases where you've got salted hashes where the salt is not part of the hashes (for example `MD5SALT`). You will need to give MDXfind a salt file. This is provided using the  `-s` switch command. A quick oneliner to seperate the salts from the hashes. 
+In the cases where you've got salted hashes where the salt is not part of the hashes (for example `MD5SALT`). You will need to give MDXfind a salt file. This is provided using the  `-s` switch command. A quick oneliner to separate the salts from the hashes. 
 
 ```
 cat vbulletin-hashes.txt | cut -f 2 -d ":" | sort -u > salts.txt
@@ -93,7 +93,7 @@ To bring that suspended MDXfind session back, you can use the `fg` command to co
 
 #### Killing MDXfind without losing STDOUT
 
-Maybe you've got to shutdown, or maybe you've just decided you don't feel like waiting till 2am for this current run to finish. If you are outputing STDOUT straight into mdsplit, you can kill the MDXfind process rather than wait till it reaches its 500k buffer size. This still allows the founds to be parsed to mdsplit without losing them.
+Maybe you've got to shutdown, or maybe you've just decided you don't feel like waiting till 2am for this current run to finish. If you are outputting STDOUT straight into mdsplit, you can kill the MDXfind process rather than wait till it reaches its 500k buffer size. This still allows the founds to be parsed to mdsplit without losing them.
 
 ```
 ps aux | grep mdxfind
