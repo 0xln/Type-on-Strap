@@ -65,14 +65,14 @@ MYSQL3x05 577828bc229cf0ea:Password
 ```
 It can help you hash a known plaintext, so you can compare and identify the algorithm.
 
-####Example 32hex and Plaintext Pair
+#### Example 32hex and Plaintext Pair
 `8be3c943b1609fffbfc51aad666d0a04:Password`
 
-####Generating Candidates And Grepping The Output
+#### Generating Candidates And Grepping The Output
 ```
 echo -n 'Password' | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' -z -f /dev/null -i 5 stdin 2>&1 | grep '8be3c943b1609fffbfc51aad666d0a04'
 ```
-####Example Output
+#### Example Output
 
 SHA1x01  <span style="color:red">8be3c943b1609fffbfc51aad666d0a04</span>adf83c9d:Password
 
