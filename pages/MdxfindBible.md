@@ -1,8 +1,8 @@
 ---
 layout: page
-title: "MDXfind Bible" 
+title: "MDXfind Bible"
 subtitle: "(Work In Progress)"   
-feature-img: "assets/img/pexels/computer2.webp" 
+feature-img: "assets/img/pexels/computer2.webp"
 permalink: /MDXfindbible               # Set a permalink your your page
 hide: False                          # Prevent the page title to appear in the navbar
 icon: "fa-book"                    # Will Display only the fontawesome icon (here: fa-search) and not the title
@@ -10,10 +10,9 @@ tags: [hashes.org, mdxfind,]
 ---
 
 
-
 ## Intro
 
-This is a work in progress page of tips and tricks that might be handy for those learning or using MDXfind. Most of the content was collated from using it, [Royce William's](https://www.techsolvency.com/pub/bin/mdxfind/) post on MDXfind and hassling hops and s3in!c on the hashes.org discord server for usage tips. Credit to waffle and hops for all the dev work. 
+This is a work in progress page of tips and tricks that might be handy for those learning or using MDXfind. Most of the content was collated from using it, [Royce William's](https://www.techsolvency.com/pub/bin/mdxfind/) post on MDXfind and hassling hops and s3in!c on the hashes.org discord server for usage tips. Credit to waffle and hops for all the dev work.
 
 
 ### Basic Usage Using STDIN
@@ -21,11 +20,11 @@ This is a work in progress page of tips and tricks that might be handy for those
 MDXfind's strength is its ability to run wordlists against lists of mixed hashes / lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let MDXfind do the hard work for you. When running mixed lists of unknown algo's, it's always worth running it with mdsplit to save the hassle of parsing it out later.
 
 ```
-cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list 
+cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list
 ```
-This command runs a mixed file of hashes through all algorithms known to  MDXfind apart from those requiring salts, usernames and internally iterated hashes like `SHA1(MD5(MD5($pass))`. 
+This command runs a mixed file of hashes through all algorithms known to  MDXfind apart from those requiring salts, usernames and internally iterated hashes like `SHA1(MD5(MD5($pass))`.
 
-### Running MDXFind From a File 
+### Running MDXFind From a File
 
 Alternatively, if you want to run it from a file instead of STDIN.
 
@@ -35,9 +34,9 @@ Alternatively, if you want to run it from a file instead of STDIN.
 This means that if you get bored waiting for results, are working from a shared network drive or want to quickly kill the process, you've still got all those delicious founds saved to a file.
 
 
-### Running salted hashes with MDXfind 
+### Running salted hashes with MDXfind
 
-In the cases where you've got salted hashes where the salt is not part of the hashes (for example `MD5SALT`). You will need to give MDXfind a salt file. This is provided using the  `-s` switch command. A quick oneliner to separate the salts from the hashes. 
+In the cases where you've got salted hashes where the salt is not part of the hashes (for example `MD5SALT`). You will need to give MDXfind a salt file. This is provided using the  `-s` switch command. A quick oneliner to separate the salts from the hashes.
 
 ```
 cat vbulletin-hashes.txt | cut -f 2 -d ":" | sort -u > salts.txt
@@ -82,7 +81,7 @@ Truncated `SHA1` identified.
 
 ### Pausing MDXfind
 
-MDXfind consuming all your cores ? Need to pause it but don't want to loose all your progress ? This command is for you. 
+MDXfind consuming all your cores ? Need to pause it but don't want to loose all your progress ? This command is for you.
 
 `Ctrl-Z`
 
@@ -124,4 +123,4 @@ Now that you've found a bunch of hashes using the tips and instructions above, y
 
 ### Where To Download MDXfind
 
-[Download MDXfind](https://hashes.org/mdxfind.php) 
+[Download MDXfind](https://hashes.org/mdxfind.php)
