@@ -6,5 +6,4 @@ feature-img: "assets/img/pexels/computer.webp"
 tags:
 ---
 
-Password cracking research, writeups and Infosec. 
- 
+Password cracking research, writeups and Infosec.

@@ -1,7 +1,7 @@
 # SITE CONFIGURATION
 baseurl: ""
 url: "0xln.pw"
-title: Infosec and Password Cracking Blog 
+title: Infosec and Password Cracking Blog
 description: "Password cracking, infosec articles and assorted hackery" # used by search engines
 
 # THEME-SPECIFIC CONFIGURATION
@@ -54,7 +54,7 @@ theme_settings:
     wordpress:
     email:
 
-  # Scripts / Features 
+  # Scripts / Features
   google_analytics: UA-148799411-1
   disqus_shortname:
   katex: true # Enable if using math markup
@@ -95,8 +95,9 @@ highlighter: rouge
 sass:
   sass_dir: _sass
   style: :compressed
-plugins: [jekyll-paginate, jekyll-seo-tag]
-exclude: [".jekyll-cache", "Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", ".idea", 
+plugins: [jekyll-paginate, jekyll-seo-tag, jekyll-feed]
+exclude: [".jekyll-cache", "Gemfile", "Gemfile.lock", "type-on-strap.gemspec", "*.gem", ".idea", "vendor/*",
           "LICENSE", "README.md", "screenshot.png", "assets/package.json", "assets/node_modules", "assets/gulpfile.js"]
-# theme: type-on-strap # Uncomment if using the theme as a jekyll theme gem
-remote_theme: sylhare/Type-on-Strap # If using as a remote_theme in github
+
+# theme: type-on-strap                                  # if using the theme as a jekyll theme gem
+remote_theme: sylhare/Type-on-Strap                     # If using as a remote_theme in github

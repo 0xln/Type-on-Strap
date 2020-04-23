@@ -1,6 +1,6 @@
 /*
  * Here are all of the gulp tasks you can use to help manage your blog
- * Use `npm install` to install all the dependencies located in package.json 
+ * Use `npm install` to install all the dependencies located in package.json
  * Then `gulp default` to minimize css and images.
  */
 const gulp = require('gulp');
@@ -34,9 +34,9 @@ gulp.task("img", function imging() {
 gulp.task('webp', () =>
   gulp.src('img/**/*.{png,svg,jpg,jpeg,gif}')
     .pipe(webp({
-        quality: 60,
-        preset: 'photo',
-        method: 6
+      quality: 60,
+      preset: 'photo',
+      method: 6
     }))
     .pipe(gulp.dest('img/'))
 );
@@ -51,13 +51,15 @@ gulp.task('css', function minicss() {
     .pipe(gulp.dest('css/vendor/'));
 });
 
-gulp.task("isolate-bootstrap-css", gulp.series('css', function isolating() {
+gulp.task('isolate', function isolateBootstrap() {
   return gulp.src('css/bootstrap-iso.less')
-    .pipe(less())
+    .pipe(less({strictMath: 'on'}))
     .pipe(replace('.bootstrap-iso html', ''))
     .pipe(replace('.bootstrap-iso body', ''))
     .pipe(gulp.dest('css/vendor/'));
-}));
+});
+
+gulp.task("isolate-bootstrap-css", gulp.series('isolate', 'css'));
 
 
 gulp.task("default", gulp.series(gulp.parallel('js', 'css', 'img')));

@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |spec|
   spec.name          = "type-on-strap"
-  spec.version       = "2.0.3"
+  spec.version       = "2.1.0"
   spec.authors       = ["Sylhare","Rohan Chandra"]
   spec.email         = ["sylhare@outlook.com", "hellorohan@outlook.com"]
 
@@ -27,13 +27,13 @@ Gem::Specification.new do |spec|
 
                                   * Use _data/ for social and language customization
 
-                                  * Vist https://github.com/sylhare/Type-on-Strap for more info.
+                                  * Visit https://github.com/sylhare/Type-on-Strap for more info.
 
                                 -------------------------------------------------------------------------------------
                                MSG
 
   spec.required_ruby_version   = '>= 2.4.0'
-    
+
   spec.add_runtime_dependency "jekyll", ">= 3.5", "< 5.0"
   spec.add_runtime_dependency "jekyll-feed", "~> 0.9"
   spec.add_runtime_dependency "jekyll-paginate", "~> 1.1"
