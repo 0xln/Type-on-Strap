@@ -1,0 +1,166 @@
+<p>This is a follow up to my original post for level one, giving solutions to the “Crack The Hash” room on <a href="https://tryhackme.com">tryhackme.com</a>. 
+This time, it’s level 2.</p>
+
+<h1 id="level-2-walkthrough">Level 2 Walkthrough</h1>
+
+<p>Again, we are going to demonstrate how useful running MDXFind is for identifying unknown hashtypes and cracking lists of mixed hashes. First, lets create a file containing all the level 2 hashes.</p>
+
+<hr />
+
+<h3 id="tools">Tools</h3>
+
+<p>If you don’t already have a copy, you can grab it from <a href="https://hashes.org/mdxfind.php">Hashes.org</a>. In this walkthrough I’m also using mdsplit to remove solved hashes from the original list as we crack them. I’m not going to directly cover it in this post, but more details on how to use mdsplit can be found in my <a href="https://0xln.pw/MDXfindbible">MDXFind bible</a> post.</p>
+
+<h2 id="solution-1--2">Solution 1 &amp; 2:</h2>
+
+<p>As all the solutions to the hashes can be found in the well known rockyou wordlist, lets run all the challenge hashes though MDXFind with that wordlist, and see what we get.</p>
+
+<h4 id="command">Command</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.list | ./mdxfind.osx -h 'ALL' -h '!salt,!user,!mdx5' rockyou.txt | ./mdsplit.osx mixedhashes.list 
+</code></pre></div></div>
+
+<p>Almost immediately, MDXfind has identified one of the hashes.</p>
+
+<h4 id="results">Results</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Reading hash list from stdin...
+Took 0.00 seconds to read hashes
+Searching through 3 unique hashes from &lt;STDIN&gt;
+Searching through 1 unique SHA512CRYPT hashes
+</code></pre></div></div>
+
+<p>Lets park that nugget of information right now, and continue running the command above.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Done - 4 threads caught
+14,344,391 lines processed in 10697 seconds
+1340.97 lines per second
+10696.98 seconds hashing, 6,968,842,180 total hash calculations
+0.65M hashes per second (approx)
+1 total files
+1 SHA256x01 hashes found
+1 NTLMx01 hashes found
+1 MD4UTF16x01 hashes found
+3 Total hashes found
+3 result lines processed, 3 types found
+MD4UTF16x01 NTLMx01 SHA256x01 
+mixedhashes.list had 2 hits
+
+Total 2 hashes found
+</code></pre></div></div>
+<p>So 2 hashes found, 2 files output and types found 🤔</p>
+
+<p><strong>NB</strong> -<code class="highlighter-rouge">MD4UTF16</code> and <code class="highlighter-rouge">NTLM</code> are effectively the same in MDXFind hence three types being found, but only two actual results.</p>
+
+<p>A quick <code class="highlighter-rouge">ls</code> and <code class="highlighter-rouge">cat</code> of the files MDXFind produced will make this a bit clearer.</p>
+
+<hr />
+<p><code class="highlighter-rouge">
+ls -lah mixedhashes.*
+</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-rw-r--r--  1 NOBODY  staff    46B 23 Apr 14:08 mixedhashes.NTLMx01
+-rw-r--r--  1 Nobody  staff    71B 23 Apr 14:08 mixedhashes.SHA256x01
+-rw-r--r--  1 Nobody  staff   147B 23 Apr 14:08 mixedhashes.list
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.NTLMx01 mixedhashes.SHA256x01
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1dfeca0c002ae40b8619ecf94819cc1b:n63umy8lkf4i
+f09edcb1fcefc6dfb23dc3505a882655ff77375ed8aa2d1c13f640fccc2d0c85:paule
+</code></pre></div></div>
+
+<p>So that solves quesiton one and two. Two left to crack.</p>
+
+<hr />
+<h2 id="solution-3--4">Solution 3 &amp; 4:</h2>
+
+<p>We already had a clue from MDXFind that one of the hashes was <code class="highlighter-rouge">SHA512CRYPT</code>. Because that algorithmn is salted, and we specified not to cracked salted hashes (<code class="highlighter-rouge">-h '!salt,!user,!mdx5'</code>), it identified the hash type, but didn’t attempt to crack that algorithm.</p>
+
+<p>Since we know the algorithmn, we can specify it directly and run the original command again.</p>
+
+<h4 id="command-1">Command</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.list | ./mdxfind.osx -h '^SHA512CRYPT$' -h rockyou.txt | ./mdsplit.osx mixedhashes.list 
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.67M hashes per second (approx)
+1 total files
+1 SHA512CRYPTx01 hashes found
+1 Total hashes found
+1 result lines processed, 1 type found
+SHA512CRYPT 
+mixedhashes.list had 1 hits
+</code></pre></div></div>
+
+<h4 id="results-1">Results</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.SHA512CRYPT 
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$6$aReallyHardSalt$6WKUTqzq.UQQmrm0pT7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41BqMhSrHVXgMpdjS6xeKZAs02.:waka99
+</code></pre></div></div>
+<p>One to go, and this one is salted with <code class="highlighter-rouge">tryhackme</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e5d8870e5bdd26602cab8dbe07a942c8669e56d6
+</code></pre></div></div>
+<hr />
+<h2 id="solution-5">Solution 5:</h2>
+
+<p>To save us trying every salted algorithmn available in MDXFind, a quick tap of the hint button indicates that the hash is <code class="highlighter-rouge">HMAC-SHA1</code>.</p>
+
+<p>As <code class="highlighter-rouge">HMAC-SHA1</code> is a keyed hash (not salted as the challenge would lead us to believe), we will need to supply the key that the hash was ‘salted’ with.</p>
+
+<p>Two command switches we need to know when cracking salted hashes or keyed hashes are:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-s      File to read salts from
+-u      File to read Userid/Usernames from
+</code></pre></div></div>
+
+<p>Since the hint has given us the exact algorithm to run, its just a case of specifying it with the <code class="highlighter-rouge">-h</code> switch, and adding in the <code class="highlighter-rouge">-u</code> switch pointing to the file that contains the key <code class="highlighter-rouge">tryhackme</code>.</p>
+
+<p><strong>Footnote</strong> Normally you would only need the <code class="highlighter-rouge">-s</code> switch for salted hashes, but since this is actually keyed, we need to use the userid switch to supply the value it has been keyed with.</p>
+
+<hr />
+
+<p>Lets write the key to a file, and then run MDXfind as before, and include a file containing our key.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>echo "tryhackme" &gt; key.txt
+</code></pre></div></div>
+
+<h4 id="command-2">Command</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.list | ./mdxfind.osx -h 'hmac-sha1' -u key.txt rockyou.txt | ./mdsplit.osx mixedhashes.list  
+</code></pre></div></div>
+<hr />
+<h4 id="results-2">Results</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1 userids read from key.txt
+Working on hash types: HMAC-SHA1 
+1 total userids in use
+Reading hash list from stdin...
+Took 0.00 seconds to read hashes
+Searching through 1 unique hashes from &lt;STDIN&gt;
+Maximum hash chain depth is 1
+Minimum hash length is 40 characters
+Using 4 cores
+Working on rockyou.txt, w=0, line 14344391, Found=0
+
+Done - 4 threads caught
+14,344,391 lines processed in 20 seconds
+717219.55 lines per second
+20.07 seconds hashing, 14,344,391 total hash calculations
+0.71M hashes per second (approx)
+1 total files
+1 HMAC-SHA1x01 hashes found
+1 Total hashes found
+1 result lines processed, 1 type found
+HMAC-SHA1 
+mixedhashes.list had 1 hits
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cat mixedhashes.HMAC-SHA1
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>e5d8870e5bdd26602cab8dbe07a942c8669e56d6:tryhackme:481616481616
+</code></pre></div></div>
+
+<p>And bingo, the final hash is cracked and level 2 is complete.</p>
