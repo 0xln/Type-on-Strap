@@ -1,0 +1,153 @@
+<p>I spent some time milling around the CrackMeIfYouCan stand at Defcon last year, but never got round to asking “Hey, how do I get involved”.</p>
+
+<p>Fast forward to this year and a number of the Hashes.org community talked about putting a team together for Crack The Con. I thought, “Yeah that would be a laugh”, so I jumped on in.</p>
+
+<p>This is what I learnt…</p>
+
+<h2 id="inthezone">InTheZone</h2>
+
+<p>As most of the team were off to a head start on the hashes when the competition started, I decided to work on the InTheZone challenge to see if we could get some early points. All there was to begin with, was the following in a text file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dig +dnssec starthere.crackthecon.0x23.pw TXT
+</code></pre></div></div>
+
+<p>Hmmmm. So naturally, I assumed it was some sort of DNS related hash. I quickly checked the Hashcat examples, and mode 8300 was listed for cracking NSEC3 hashes (NSEC stands for ‘next secure record’). So I set about researching.</p>
+
+<p>NSEC3, is effectively a chain of DNS records linking one to the other, in a zone secured with DNSSEC.</p>
+
+<p>As some of the examples online detailed zone walking, it looked like I’d need to use this technique, to collect the hashes that were linked from one to the other.</p>
+
+<p>I started using a couple of different tools but hit some dependency snags along the way. I finally settled on an Nmap script, that did the trick:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nmap  -sU -p 53 ns.crackthecon.0x23.pw 
+--script=dns-nsec3-enum --script-args dns-nsec3-enum.domains=starthere.crackthecon.0x23.pw 
+-oA hashv2   -vvvv
+</code></pre></div></div>
+
+<p>Out came a bunch of hashes:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00gbb3vv0ofs2p513u104iisss0nsec3
+00nr4pu24aq9ab5t9u934ik72h0isfun
+</code></pre></div></div>
+<h4 id="formating-and-cracking-the-hashes">Formating And Cracking The Hashes</h4>
+
+<p>Checking back on the Hashcat example, I realised I was missing a big chunk of information. The salt, the iterations and the domain, in the following format:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hash:.domain:SALT:Iterations 
+</code></pre></div></div>
+<p>The next question was, where do i find those 🧐? 
+After some more Googling, it turned out the NSEC3PARAM record had all the goodies I needed:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>crackthecon.0x23.pw IN NSEC3PARAM    
+hash algorithm:SHA-1 (1)
+flags:None (0)
+iterations:19
+salt:(128 bits)    
+4754464F214E6F7468696E6748657265
+</code></pre></div></div>
+
+<p>Some command line Kung Fu later to format the hashes:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>awk {print $0”:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19”} hashes-extracted.txt 
+</code></pre></div></div>
+
+<h4 id="example-of-correctly-formatted-hashes">Example of Correctly Formatted Hashes</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>00gbb3vv0ofs2p513u104iisss0nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00hfaricfrm4mlcc1mnss6i4jtgnsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00nr4pu24aq9ab5t9u934ik72h0isfun:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00oco3n80stmell97ncc8u3av80nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00qti8rpelus78s8cssr2ufn9jgnsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00rpjhtgen69qdq9hjojsbfnjngnsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00s41hb79d4ik4roa0pa7vm3ld0nsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+00t0ridpt1emn55kom8ev4qsm8gnsec3:.crackthecon.0x23.pw:4754464F214E6F7468696E6748657265:19
+</code></pre></div></div>
+
+<p>Once I finally got the hashes formatted correctly, it was a matter of running them against a subdomain wordlist. I decided to use the SecLists GitHub repo to start with.</p>
+
+<p><a href="https://github.com/danielmiessler/SecLists/blob/master/Discovery/DNS/subdomains-top1million-5000.txt">SecLists top 5000 subdomains</a></p>
+
+<h4 id="example-command">Example Command</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hashcat -m 8300 -a 0 nsec3hashes.txt subdomains-top1million-5000.txt 
+</code></pre></div></div>
+<p>Once I got a few matches back, it was just a case of checking the results, analysing the patterns, rinse and repeat. 🛀</p>
+
+<h2 id="100-salt-free-110-hassle">100% salt-free 110% hassle</h2>
+
+<p>After reading <a href="https://twitter.com/Evil_Mog">@Evil_Mog</a>’s blog post about the creation of the <a href="https://github.com/evilmog/evilmog/wiki/Hashcat-Raking---generated2.rule">generated2.rule</a> I thought we’ve only got a few hours left of the competition, why not see if I could find some other patterns since my cards were idling.</p>
+
+<p>Our found percentage was lower than we anticipated for the 100 % salt-free 110% hassle list (raw-sha512), so it they seemed like the perfect candidate to try it on.</p>
+
+<p>As the hashing algorithm is relatively fast, we are able to run multiple passes of random rules, to effectively rake through combinations till we find a pattern hit. Once we got a hit, we added that rule to a rule file, to run against other algorithms present in the competition and the hashes themselves.</p>
+
+<p>An example command might look something like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>hashcat -m 1700 -a 0 hashes.txt founds.txt -g 100000 --debug-mode=1 --debug-file=matched.rule --loopback
+</code></pre></div></div>
+
+<p>During raking, I noticed that experimenting  with the minimum and maximum generated rule function flags, was producing more results:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>--generate-rules-func-min=NUM 
+--generate-rules-func-max=NUM
+</code></pre></div></div>
+
+<p>Cranking the minimum rule function to four, resulted in more hits. Some of the rules found can be seen below:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>T5 *A7
+y2 s}S o4Y
+TB O82
+T4 'B *1A
+O42 *92 O59
+i8t s3| T4
+K k OA4
+T6 s&amp;N o8e
+$B s|\’  ^&lt;
+</code></pre></div></div>
+
+<h4 id="example-output-from-matched-rules">Example Output from Matched Rules</h4>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ cat word.txt
+testwordrules
+
+$ cat rules/custom.rule
+T5 *A7
+y2 s}S o4Y
+TB O82
+T4 'B *1A
+O42 *92 O59
+i8t s3| T4
+K k OA4
+T6 s&amp;N o8e
+$B s|' ^&lt;
+
+$ ./hashcat64 word.txt --stdout -r rules/custom.rule
+testwOrlrudes
+teteYtwordrules
+testwordlEs
+tlstWordrue
+teetrdrulss
+testWordtrules
+etstwordrulse
+testwoRdeules
+&lt;testwordrulesB
+</code></pre></div></div>
+
+<p><em>(Output courtesy of the <a href="https://discord.gg/pbbyBbd">hashes.org</a> discord)</em></p>
+
+<p>As the minimum number of functions was increased to four, the likelihood of hitting a pattern was increased per run. As you can see above, this didn’t necessarily mean that four rules needed to be applied to each candidate. Maybe only one or two of the rules would result in successful cracks, but the percentage chance of a crack per rule, increased.</p>
+
+<p>Using this method, and stacking the matched.rule, we managed to grind additional hashes and patterns we were unlikely to ever find through traditional rules alone. Here are some example founds:</p>
+
+<h4 id="example-founds">Example Founds</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>woaitaitongtong062
+Rhtottotybt juy`v
+2111201111cmpunk
+AngelHeartrt201
+17.05.25.2003.s
+</code></pre></div></div>
+
+<h2 id="wrap-up">Wrap Up</h2>
+<p>Big thank you to the Cynosure Prime team for putting together the competition and for all their hard work running it. Check out their blog post if you want to find out more: <a href="https://blog.cynosureprime.com/2019/05/crackthecon-year-1.html">Crackthecon year One</a></p>
+
+<p>Shout to all the hashes.org team members for their killer work during the competition.</p>
