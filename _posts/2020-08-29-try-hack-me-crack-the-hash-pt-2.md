@@ -89,7 +89,7 @@ f09edcb1fcefc6dfb23dc3505a882655ff77375ed8aa2d1c13f640fccc2d0c85:paule
 So that solves quesiton one and two. Two left to crack.
 
 ---
-## Solution 3 & 4:
+## Solution 3:
 
 We already had a clue from MDXFind that one of the hashes was `SHA512CRYPT`. Because that algorithmn is salted, and we specified not to cracked salted hashes (`-h '!salt,!user,!mdx5'`), it identified the hash type, but didn't attempt to crack that algorithm. 
 
@@ -126,7 +126,7 @@ One to go, and this one is salted with `tryhackme`.
 e5d8870e5bdd26602cab8dbe07a942c8669e56d6
 ```
 ---
-## Solution 5:
+## Solution 4:
 
 To save us trying every salted algorithmn available in MDXFind, a quick tap of the hint button indicates that the hash is `HMAC-SHA1`.  
 
