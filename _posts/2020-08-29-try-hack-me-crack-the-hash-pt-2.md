@@ -4,7 +4,7 @@ title: TryHackMe - Crack The Hash Walkthrough Level 2
 tags: [Password Cracking, MDXFind, Crack The Hash, tryhackme]
 ---
 
-This is a follow up to my original post for level one, giving solutions to the "Crack The Hash" room on [tryhackme.com](https://tryhackme.com). 
+This is a follow up to my original post for level 1, giving solutions to the "Crack The Hash" room on [tryhackme.com](https://tryhackme.com). 
 This time, it's level 2.
 
 # Level 2 Walkthrough
@@ -62,7 +62,8 @@ Total 2 hashes found
 ```
 So 2 hashes found, 2 files output and types found 🤔
  
-**NB** -`MD4UTF16` and `NTLM` are effectively the same in MDXFind hence three types being found, but only two actual results. 
+**NB** 
+-`MD4UTF16` and `NTLM` are effectively the same in MDXFind hence three types being found, but only two actual results. 
 
 A quick `ls` and `cat` of the files MDXFind produced will make this a bit clearer.
 
@@ -123,7 +124,7 @@ $6$aReallyHardSalt$6WKUTqzq.UQQmrm0pT7MPpMbGNnzXPMAXi4bJMl9be.cfi3/qxIf.hsGpS41B
 One to go, and this one is salted with `tryhackme`.
 
 ```
-e5d8870e5bdd26602cab8dbe07a942c8669e56d6
+e5d8870e5bdd26602cab8dbe07a942c8669e56d6:trackhackme
 ```
 ---
 ## Solution 4:
@@ -141,7 +142,7 @@ Two command switches we need to know when cracking salted hashes or keyed hashes
 
 Since the hint has given us the exact algorithm to run, its just a case of specifying it with the `-h` switch, and adding in the `-u` switch pointing to the file that contains the key `tryhackme`. 
 
-**Footnote** Normally you would only need the `-s` switch for salted hashes, but since this is actually keyed, we need to use the userid switch to supply the value it has been keyed with.
+**Footnote:** Normally you would only need the `-s` switch for salted hashes, but since this is actually keyed, we need to use the Userid switch to supply the value it has been keyed with.
 
 ---
 
@@ -191,4 +192,4 @@ cat mixedhashes.HMAC-SHA1
 e5d8870e5bdd26602cab8dbe07a942c8669e56d6:tryhackme:481616481616
 ```
 
-And bingo, the final hash is cracked and level 2 is complete.
+And bingo, the final hash is cracked and Level 2 is complete.
