@@ -7,7 +7,7 @@ dribbble:
 facebook:
 flickr:
 gitlab:
-github: "sylhare"
+github: 
 instagram:
 keybase:
 linkedin:         # Full URL
@@ -18,7 +18,7 @@ stack_overflow:
 stack_exchange:   # Full URL
 steam:
 tumblr:
-twitter:          # "twitter username"
+twitter: @0xlnt          # "twitter username"
 vimeo:
 wordpress:
 youtube:          # Youtube channel token like: UCqECaJ8Gagnn7YCbPEzWH6g
@@ -29,12 +29,12 @@ feed:
 
 # Share button options
 share:
-  facebook: true
+  facebook: false
   twitter: true
-  tumblr: true
-  pinterest: true
-  pocket:
-  reddit: true
-  linkedin: true
-  wordpress:
-  email: true
+  tumblr: false
+  pinterest: false
+  pocket: false
+  reddit: false
+  linkedin: false
+  wordpress: false
+  email: false
