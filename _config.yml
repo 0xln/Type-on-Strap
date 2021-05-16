@@ -1,7 +1,7 @@
 # SITE CONFIGURATION
 baseurl: ""
 url: "0xln.pw"
-
+markdown: GFM
 # THEME-SPECIFIC CONFIGURATION
 title: Infosec and Password Cracking Blog                                   # site's title
 description: "Password cracking, infosec articles and assorted hackery"      # used by search engines

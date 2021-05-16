@@ -19,18 +19,18 @@ This is a work in progress page of tips and tricks that might be handy for those
 
 MDXfind's strength is its ability to run wordlists against lists of mixed hashes / lists of unknown hashes. Got a bunch of 32hex hashes but no idea what they are? Let MDXfind do the hard work for you. When running mixed lists of unknown algo's, it's always worth running it with mdsplit to save the hassle of parsing it out later.
 
-```
-cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list
-```
+
+  cat mixedhashes.list | ./mdxfind.static -h 'ALL' -h '!salt,!user,!md5x' wordlist.txt | ./mdsplit.static mixedhashes.list
+
 This command runs a mixed file of hashes through all algorithms known to  MDXfind apart from those requiring salts, usernames and internally iterated hashes like `SHA1(MD5(MD5($pass))`.
 
 ### Running MDXFind From a File
 
 Alternatively, if you want to run it from a file instead of STDIN.
 
-```
-./mdxfind.static -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt > results.file
-```
+
+    ./mdxfind.static -h ALL -h '!salt,!user,!md5x' -f mixedhashes.list wordlist.txt > results.file
+
 This means that if you get bored waiting for results, are working from a shared network drive or want to quickly kill the process, you've still got all those delicious founds saved to a file.
 
 
