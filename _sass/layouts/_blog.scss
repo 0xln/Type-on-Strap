@@ -6,10 +6,15 @@
   height: 100%;
   font-size: 1.2em;
   text-align: center;
-  color: $header-text-color;
-  background: $header-background-color no-repeat;
-  background-size: $feature-image-size;
-  background-position: 100% -50px 0% center top;
+  color: var(--header-text);
+  background: no-repeat var(--header-background);
+  backdrop-filter: brightness(0.5);
+  background-size: cover;
+
+  h1 {
+    font-family: $font-family-logo;
+    @extend .subtle-txt-shadow;
+  }
 
   /* --- Responsive --- */
   @media screen and (min-width: $break) {
@@ -24,26 +29,13 @@
     background-size: 400% auto;
   }
 
-  //For white images
-  p,
-  a,
-  li,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    font-family: $font-family-logo;
-    @extend .header-txt-shadow;
-  }
-
   p:last-child {
     margin-bottom: 0;
   }
 }
 
 #main {
-  background-position: 100% 0, 0 center, center top;
+  background-position: 100% -50px, 0 center, center top;
 }
 
 /* --- Post listing --- */
@@ -53,8 +45,8 @@
     width: 100%;
     margin-bottom: 0;
     display: inline-block;
-    background-size: $feature-image-size;
-    border-bottom: 1px solid $border-color;
+    background-size: cover;
+    border-bottom: 1px solid var(--border);
 
     p a {
       @extend .body-link;
