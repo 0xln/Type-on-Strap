@@ -1,5 +1,5 @@
 # SITE CONFIGURATION
-baseurl: ""
+baseurl: "/Blog"
 url: "0xln.pw"
 # THEME-SPECIFIC CONFIGURATION
 title: Infosec and Password Cracking Blog                                   # site's title
