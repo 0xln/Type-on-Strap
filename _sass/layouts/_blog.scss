@@ -26,7 +26,11 @@
   }
 
   @media screen and (max-width: $sm-break) {
-    background-size: 400% auto;
+    background-size: 250% auto;
+  }
+
+  @media screen and (max-width: $x-sm-break) {
+    background-size: 300% auto;
   }
 
   p:last-child {
@@ -46,7 +50,7 @@
     margin-bottom: 0;
     display: inline-block;
     background-size: cover;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 
     p a {
       @extend .body-link;

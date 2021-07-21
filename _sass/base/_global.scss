@@ -8,11 +8,6 @@ figure {
   margin: 0;
 }
 
-// For correct line number width in Github Gists
-.gist table tbody tr td {
-  box-sizing: content-box;
-}
-
 html {
   background: var(--background);
 }
@@ -146,7 +141,7 @@ blockquote {
   margin: 1em 1em;
   padding: 0.75em 1em;
   background-color: var(--blockquote);
-  box-shadow: 0 2px 2px var(--border);
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 blockquote *:last-child,
@@ -164,7 +159,7 @@ table {
 td,
 th {
   padding: 0.5em 1em;
-  border: 1px solid var(--td-border);
+  border: 1px solid var(--border);
   text-align: left;
 }
 
@@ -190,12 +185,6 @@ dl,
 .math-display {
   line-height: 1.5;
   margin-bottom: 1em;
-}
-
-// KaTeX math display
-.math-display {
-  display: inline-block;
-  width: 100%;
 }
 
 // Lists within lists
@@ -242,4 +231,50 @@ kbd {
   line-height: 1;
   padding: 2px 4px;
   white-space: nowrap;
+}
+
+// Cookie consent
+#cookie-notice {
+  padding: 0.5rem 1rem;
+  display: none;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background: rgba(2, 2, 2, 0.85);
+  color: lightgray;
+  z-index: 1000;
+}
+
+#cookie-notice a {
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 0.6rem;
+}
+
+/* Vendor tweaks */
+// For correct line number width in Github Gists
+.gist table tbody tr td {
+  box-sizing: content-box;
+}
+
+// KaTeX math display
+.math-display {
+  display: inline-block;
+  width: 100%;
+}
+
+// Mermaid
+.mermaid {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 2%;
+}
+
+.mermaid > svg {
+  margin: auto;
+  display: block;
+  height: auto;
+  padding-bottom: 2em;
+  padding-top: 2em;
+  max-width: 100%;
 }
