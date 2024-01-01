@@ -23,7 +23,7 @@ color_image: /assets/img/lineart.png                    # A bit transparent for 
 katex: false                                             # Enable if using math markup
 mermaid: true                                           # Enable mermaid-js for sequence and diagrams
 google_analytics: UA-148799411-1                                        # Tracking ID, e.g. "UA-000000-01"
-cookie_consent: false                                   # To respect the usage of cookies
+cookie_consent: true                                   # To respect the usage of cookies
 color_theme: auto                                       # auto, dark or light
 
 # Comments
